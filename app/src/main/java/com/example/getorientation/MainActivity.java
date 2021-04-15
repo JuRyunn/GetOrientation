@@ -88,4 +88,15 @@ public class MainActivity extends AppCompatActivity {
     private float radian2Degree(float radian) {
         return radian * 100 / (float) Math.PI;
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
 }
