@@ -92,11 +92,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-
+        sensorManager.unregisterListener(Listner);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
+        sensorManager.registerListener(Listner,magSensor,SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(Listner,accSensor,SensorManager.SENSOR_DELAY_UI);
     }
 }
