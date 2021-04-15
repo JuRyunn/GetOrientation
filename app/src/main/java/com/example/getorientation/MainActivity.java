@@ -12,7 +12,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-   // TextView txtAzimuth, txtPitch, txtRoll;
+
+    AzimuthView azimuthView;
+
+
+    //TextView txtAzimuth, txtPitch, txtRoll;
     SensorManager sensorManager;
     Sensor magSensor, accSensor;
     SensorEventListener Listner;
@@ -24,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // txtAzimuth = findViewById(R.id.txtAzimuth);
-       // txtPitch = findViewById(R.id.txtPitch);
+        azimuthView = findViewById(R.id.azmuthView);
+        // txtAzimuth = findViewById(R.id.txtAzimuth);
+        // txtPitch = findViewById(R.id.txtPitch);
         //txtRoll = findViewById(R.id.txtRoll);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -59,19 +64,20 @@ public class MainActivity extends AppCompatActivity {
 
                     SensorManager.getOrientation(R, values);
 
-                    if((int) radian2Degree(values[0]) == 180) {
+                    /*if((int) radian2Degree(values[0]) == 180) {
 
                         Toast.makeText(MainActivity.this, "180", Toast.LENGTH_SHORT);
 
-                    } else if((int) radian2Degree(values[0]) == -180) {
+                    }  else if((int) radian2Degree(values[0]) == -180) {
 
                         Toast.makeText(MainActivity.this, "-180", Toast.LENGTH_SHORT);
 
-                    }
-
-                 //   txtAzimuth.setText("Azimuth: " + (int) radian2Degree(values[0]));
-                 //   txtPitch.setText("Pitch: " + (int) radian2Degree(values[1]));
-                    //txtRoll.setText("Roll: " + (int) radian2Degree(values[2]));
+                    } */
+                    azimuthView.azimuth = (int)radian2Degree(values[0]);
+                    azimuthView.invalidate();
+                    // txtAzimuth.setText("Azimuth: " + (int) radian2Degree(values[0]));
+                    //txtPitch.setText("Pitch: " + (int) radian2Degree(values[1]));
+                    //txtRoll.setText("Roll: " + (int) radian2Degree(values[2])); */
 
                 }
             }
@@ -84,13 +90,8 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.registerListener(Listner, accSensor, SensorManager.SENSOR_DELAY_UI);
 
     }
-
-    private float radian2Degree(float radian) {
-        return radian * 100 / (float) Math.PI;
-    }
-
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(Listner);
     }
@@ -100,5 +101,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         sensorManager.registerListener(Listner,magSensor,SensorManager.SENSOR_DELAY_UI);
         sensorManager.registerListener(Listner,accSensor,SensorManager.SENSOR_DELAY_UI);
+    }
+
+
+
+
+
+    private float radian2Degree(float radian) {
+        return radian * 100 / (float) Math.PI;
     }
 }
